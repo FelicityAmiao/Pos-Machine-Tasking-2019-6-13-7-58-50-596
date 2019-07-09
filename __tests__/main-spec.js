@@ -53,3 +53,21 @@ it ('should return boughtItemsConditions given true, ["0004"], databaseItems whe
     expect(countBoughtItems(true, ["0004"], databaseItems)).toStrictEqual(boughtItemsConditions);
 });
 
+//test computeCost
+let boughtItemsConditionsForComputeCostTest = [{
+    name: 'Coca Cola',
+    price: 3,
+    count: 1
+}, {
+    name: 'Pepsi-Cola',
+    price: 5,
+    count: 2
+}, {
+    name: 'Dr Pepper',
+    price: 7,
+    count: 1
+}];
+const computeCost = main.computeCost;
+it ('should return 20 given true, boughtItemsConditionsForComputeCostTest  when call computeCost', () => {
+    expect(computeCost(true, boughtItemsConditionsForComputeCostTest)).toBe(20);
+});

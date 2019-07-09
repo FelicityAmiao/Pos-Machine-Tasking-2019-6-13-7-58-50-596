@@ -37,4 +37,13 @@ function countBoughtItems(isValid, barcodes, databaseItems) {
     return boughtItemsConditions;
 }
 
-module.exports = {isBarcodesValid, countBoughtItems};
+function computeCost(isValid, boughtItemsConditions) {
+    if(!isValid) return 0;
+    let totalCost = 0;
+    boughtItemsConditions.forEach(function(boughtItemCondition) {
+        totalCost += boughtItemCondition.price * boughtItemCondition.count;
+    });
+    return totalCost;
+}
+
+module.exports = {isBarcodesValid, countBoughtItems, computeCost};
