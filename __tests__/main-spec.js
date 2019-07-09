@@ -71,3 +71,15 @@ const computeCost = main.computeCost;
 it ('should return 20 given true, boughtItemsConditionsForComputeCostTest  when call computeCost', () => {
     expect(computeCost(true, boughtItemsConditionsForComputeCostTest)).toBe(20);
 });
+
+//test getReceipt
+const getReceipt = main.getReceipt;
+
+it ('should return "[ERROR]: 1003 barcode is not exists in database" given falseValidResult1 when call getReceipt', () => {
+    expect(getReceipt(falseValidResult1)).toBe("[ERROR]: 1003 barcode is not exists in database");
+});
+
+let receiptForGetReceiptTest = 'Receipts\n-----------------------------\nCoca Cola\t3\t1\nPepsi-Cola\t5\t2\nDr Pepper\t7\t1\n-----------------------------\nPrice: 20';
+it ('should return receiptForGetReceiptTest given true, boughtItemsConditionsForComputeCostTest, 20  when call getReceipt', () => {
+    expect(getReceipt(trueValidResult, boughtItemsConditionsForComputeCostTest, 20)).toBe(receiptForGetReceiptTest);
+});

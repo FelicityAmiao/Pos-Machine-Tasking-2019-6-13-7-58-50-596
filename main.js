@@ -46,4 +46,14 @@ function computeCost(isValid, boughtItemsConditions) {
     return totalCost;
 }
 
-module.exports = {isBarcodesValid, countBoughtItems, computeCost};
+function getReceipt(validResult, boughtItemsConditions, totalcost) {
+    if(!validResult.isValid) return validResult.errorMsg;
+    let printedReceipt = 'Receipts\n-----------------------------\n';
+    boughtItemsConditions.forEach(function(boughtItemCondition) {
+        printedReceipt += boughtItemCondition.name + "\t" + boughtItemCondition.price + "\t" + boughtItemCondition.count + "\n";
+    });
+    printedReceipt += "-----------------------------\nPrice: " + totalcost;
+    return printedReceipt;
+}
+
+module.exports = {isBarcodesValid, countBoughtItems, computeCost, getReceipt};
