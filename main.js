@@ -26,11 +26,18 @@ function countBoughtItems(isValid, barcodes, databaseItems) {
     databaseItems.forEach(function(item) {
         barcodes.forEach(function(barcode) {
             if(item.id === barcode) {
+                let flag = false;
                 let boughtItemCondition = {};
                 boughtItemCondition.name = item.name;
                 boughtItemCondition.price = item.price;
-                boughtItemCondition.count? boughtItemCondition.count++: boughtItemCondition.count = 1;
-                boughtItemsConditions.push(boughtItemCondition);
+                boughtItemsConditions.forEach(function(_boughtItemCondition) {
+                    if(_boughtItemCondition.name === item.name) {
+                        _boughtItemCondition.count++;
+                        flag = true;
+                    }
+                });
+                if(!boughtItemCondition.count) boughtItemCondition.count = 1;
+                if(!flag) boughtItemsConditions.push(boughtItemCondition);
             }
         });
     });
@@ -56,4 +63,10 @@ function getReceipt(validResult, boughtItemsConditions, totalcost) {
     return printedReceipt;
 }
 
-module.exports = {isBarcodesValid, countBoughtItems, computeCost, getReceipt};
+function printReceipt(barcodes, databaseItems) {
+    let validResult = isBarcodesValid(barcodes, databaseItems);
+    let boughtItemsConditions = countBoughtItems(validResult.isValid, barcodes, databaseItems);
+    return getReceipt(validResult, boughtItemsConditions, computeCost(validResult.isValid, boughtItemsConditions));
+}
+
+module.exports = {isBarcodesValid, countBoughtItems, computeCost, getReceipt, printReceipt};

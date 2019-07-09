@@ -83,3 +83,13 @@ let receiptForGetReceiptTest = 'Receipts\n-----------------------------\nCoca Co
 it ('should return receiptForGetReceiptTest given true, boughtItemsConditionsForComputeCostTest, 20  when call getReceipt', () => {
     expect(getReceipt(trueValidResult, boughtItemsConditionsForComputeCostTest, 20)).toBe(receiptForGetReceiptTest);
 });
+
+//test printReceipt
+const printReceipt = main.printReceipt;
+it ('should return "[ERROR]: 1005 barcode is not exists in database" given ["1005"], databaseItems when call printReceipt', () => {
+    expect(printReceipt(["1005"], databaseItems)).toBe("[ERROR]: 1005 barcode is not exists in database");
+});
+
+it ('should return "Receipts\n-----------------------------\nCoca Cola\t3\t1\nPepsi-Cola\t5\t2\nDr Pepper\t7\t1\n-----------------------------\nPrice: 20" given ["0001", "0003", "0005", "0003"], databaseItems when call printReceipt', () => {
+    expect(printReceipt(["0001", "0003", "0005", "0003"], databaseItems)).toBe("Receipts\n-----------------------------\nCoca Cola\t3\t1\nPepsi-Cola\t5\t2\nDr Pepper\t7\t1\n-----------------------------\nPrice: 20");
+});
