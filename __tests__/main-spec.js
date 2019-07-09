@@ -1,7 +1,7 @@
 const main = require("../main.js");
 
+//test isBarcodesValid
 const isBarcodesValid = main.isBarcodesValid;
-
 const databaseItems = [
     {"id": "0001", "name" : "Coca Cola", "price": 3},
     {"id": "0002", "name" : "Diet Coke", "price": 4},
@@ -37,3 +37,19 @@ let falseValidResult2 = {
 it ('should return falseValidResult2 given [], databaseItems when call isBarcodesValid', () => {
     expect(isBarcodesValid([], databaseItems)).toStrictEqual(falseValidResult2);
 });
+
+//test countBoughtItems
+const countBoughtItems = main.countBoughtItems;
+it ('should return null given false, [], databaseItems when call countBoughtItems', () => {
+    expect(countBoughtItems(false, [], databaseItems)).toStrictEqual(null);
+});
+
+let boughtItemsConditions = [{
+    name: 'Mountain Dew',
+    price: 6,
+    count: 1
+}];
+it ('should return boughtItemsConditions given true, ["0004"], databaseItems when call countBoughtItems', () => {
+    expect(countBoughtItems(true, ["0004"], databaseItems)).toStrictEqual(boughtItemsConditions);
+});
+

@@ -20,4 +20,21 @@ function isBarcodesValid(barcodes, databaseItems) {
     return validResult;
 }
 
-module.exports = {isBarcodesValid};
+function countBoughtItems(isValid, barcodes, databaseItems) {
+    let boughtItemsConditions = [];
+    if(!isValid) return null;
+    databaseItems.forEach(function(item) {
+        barcodes.forEach(function(barcode) {
+            if(item.id === barcode) {
+                let boughtItemCondition = {};
+                boughtItemCondition.name = item.name;
+                boughtItemCondition.price = item.price;
+                boughtItemCondition.count? boughtItemCondition.count++: boughtItemCondition.count = 1;
+                boughtItemsConditions.push(boughtItemCondition);
+            }
+        });
+    });
+    return boughtItemsConditions;
+}
+
+module.exports = {isBarcodesValid, countBoughtItems};
