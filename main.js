@@ -66,7 +66,9 @@ let getReceipt = (validResult, boughtItemsConditions, totalcost) => {
 let printReceipt = (barcodes, databaseItems) => {
     let validResult = isBarcodesValid(barcodes, databaseItems);
     let boughtItemsConditions = countBoughtItems(validResult.isValid, barcodes, databaseItems);
-    return getReceipt(validResult, boughtItemsConditions, computeCost(validResult.isValid, boughtItemsConditions));
+    let receipt = getReceipt(validResult, boughtItemsConditions, computeCost(validResult.isValid, boughtItemsConditions));
+    console.log(receipt);
+    return receipt;
 }
 
 module.exports = {isBarcodesValid, countBoughtItems, computeCost, getReceipt, printReceipt};
