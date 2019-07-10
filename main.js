@@ -1,4 +1,4 @@
-function isBarcodesValid(barcodes, databaseItems) {
+let isBarcodesValid = (barcodes, databaseItems) => {
     let validResult = {
         isValid: true,
         errorMsg: ''
@@ -8,10 +8,10 @@ function isBarcodesValid(barcodes, databaseItems) {
         validResult.errorMsg = '[ERROR]: Barcodes is empty!';
         return validResult;
     }
-    let databaseIDs = databaseItems.map(function(item) {
+    let databaseIDs = databaseItems.map((item) => {
         return item['id'];
     });
-    barcodes.forEach(function(barcode) {
+    barcodes.forEach((barcode) => {
         if(databaseIDs.indexOf(barcode) === -1) {
             validResult.isValid = false;
             validResult.errorMsg = `[ERROR]: ${barcode} barcode is not exists in database`;
@@ -20,17 +20,17 @@ function isBarcodesValid(barcodes, databaseItems) {
     return validResult;
 }
 
-function countBoughtItems(isValid, barcodes, databaseItems) {
+let countBoughtItems = (isValid, barcodes, databaseItems) => {
     let boughtItemsConditions = [];
     if(!isValid) return null;
-    databaseItems.forEach(function(item) {
-        barcodes.forEach(function(barcode) {
+    databaseItems.forEach((item) => {
+        barcodes.forEach((barcode) => {
             if(item.id === barcode) {
                 let flag = false;
                 let boughtItemCondition = {};
                 boughtItemCondition.name = item.name;
                 boughtItemCondition.price = item.price;
-                boughtItemsConditions.forEach(function(_boughtItemCondition) {
+                boughtItemsConditions.forEach((_boughtItemCondition) => {
                     if(_boughtItemCondition.name === item.name) {
                         _boughtItemCondition.count++;
                         flag = true;
@@ -44,26 +44,26 @@ function countBoughtItems(isValid, barcodes, databaseItems) {
     return boughtItemsConditions;
 }
 
-function computeCost(isValid, boughtItemsConditions) {
+let computeCost = (isValid, boughtItemsConditions) => {
     if(!isValid) return 0;
     let totalCost = 0;
-    boughtItemsConditions.forEach(function(boughtItemCondition) {
+    boughtItemsConditions.forEach((boughtItemCondition) => {
         totalCost += boughtItemCondition.price * boughtItemCondition.count;
     });
     return totalCost;
 }
 
-function getReceipt(validResult, boughtItemsConditions, totalcost) {
+let getReceipt = (validResult, boughtItemsConditions, totalcost) => {
     if(!validResult.isValid) return validResult.errorMsg;
     let printedReceipt = 'Receipts\n-----------------------------\n';
-    boughtItemsConditions.forEach(function(boughtItemCondition) {
-        printedReceipt += boughtItemCondition.name + "\t" + boughtItemCondition.price + "\t" + boughtItemCondition.count + "\n";
+    boughtItemsConditions.forEach((boughtItemCondition) => {
+        printedReceipt += `${boughtItemCondition.name}\t${boughtItemCondition.price}\t${boughtItemCondition.count}\n`;
     });
-    printedReceipt += "-----------------------------\nPrice: " + totalcost;
+    printedReceipt += `-----------------------------\nPrice: ${totalcost}`;
     return printedReceipt;
 }
 
-function printReceipt(barcodes, databaseItems) {
+let printReceipt = (barcodes, databaseItems) => {
     let validResult = isBarcodesValid(barcodes, databaseItems);
     let boughtItemsConditions = countBoughtItems(validResult.isValid, barcodes, databaseItems);
     return getReceipt(validResult, boughtItemsConditions, computeCost(validResult.isValid, boughtItemsConditions));
